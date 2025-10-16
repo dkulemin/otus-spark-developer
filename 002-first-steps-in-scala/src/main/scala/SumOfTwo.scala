@@ -3,7 +3,7 @@ object SumOfTwo {
    * Напишите функцию, которая принимает два целых числа и возвращает их сумму.
    * */
 
-  private def sumOfTwo(x: Int, y: Int): Int = x + y
+  def sumOfTwo(x: Int, y: Int): Int = x + y
 
   def main(args: Array[String]): Unit = {
     println(sumOfTwo(2, 2))
