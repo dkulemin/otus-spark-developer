@@ -1,0 +1,7 @@
+-- Active: 1762760677160@@127.0.0.1@10000@default
+-- Active: 1762760677160@@127.0.0.1@10000@default
+SELECT version();
+
+CREATE DATABASE test;
+
+DROP DATABASE test;
