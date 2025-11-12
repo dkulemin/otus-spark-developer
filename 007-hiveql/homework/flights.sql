@@ -95,7 +95,7 @@ ORDER BY avg_depdelay DESC, avg_arrdelay DESC
 LIMIT 10;
 
 
--- Количества аэропортов в штатах и городах
+-- Количество аэропортов в штатах и городах
 CREATE TABLE flights.airport_count AS
 SELECT DISTINCT
     state,
