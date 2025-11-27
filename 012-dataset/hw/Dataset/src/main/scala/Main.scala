@@ -32,6 +32,36 @@ object Main extends App {
 
   case class TaxiZone(LocationID: Int, Borough: String, Zone: String, service_zone: String)
 
+  case class TripZone(VendorID: Int,
+                      tpep_pickup_datetime: java.time.LocalDateTime,
+                      tpep_dropoff_datetime: java.time.LocalDateTime,
+                      passenger_count: Int,
+                      trip_distance: Double,
+                      RatecodeID: Int,
+                      store_and_fwd_flag: String,
+                      PULocationID: Int,
+                      DOLocationID: Int,
+                      payment_type: Int,
+                      fare_amount: Double,
+                      extra: Double,
+                      mta_tax: Double,
+                      tip_amount: Double,
+                      tolls_amount: Double,
+                      improvement_surcharge: Double,
+                      total_amount: Double,
+                      LocationID: Int,
+                      Borough: String,
+                      Zone: String,
+                      service_zone: String)
+
+  case class TripAggregate(
+                            Zone: String,
+                            trips: BigInt,
+                            min_trip_distance: Double,
+                            avg_trip_distance: Double,
+                            max_trip_distance: Double,
+                            std_trip_distance: Double)
+
   val tripDS = spark.read.parquet("data/yellow_taxi_jan_25_2018").as[Trip]
 
   val zonesDS = spark.read.option("header", "true").csv("data/taxi_zones.csv")
@@ -39,6 +69,7 @@ object Main extends App {
     .as[TaxiZone]
 
   tripDS.join(zonesDS, $"PULocationID" === $"LocationID")
+    .as[TaxiZone]
     .groupBy($"Zone")
     .agg(
       count("*").alias("trips"),
@@ -47,6 +78,7 @@ object Main extends App {
       max("trip_distance").alias("max_trip_distance"),
       std($"trip_distance").alias("std_trip_distance"),
     )
+    .as[TripAggregate]
     .write
     .mode("overwrite")
     .parquet("result/zone_trips")
