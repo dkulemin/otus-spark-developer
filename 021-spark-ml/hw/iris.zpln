@@ -1,0 +1,1151 @@
+{
+  "paragraphs": [
+    {
+      "text": "%spark\n\nimport org.apache.spark.sql.types.{DoubleType, StructField, StructType, StringType}\nimport org.apache.spark.ml.Pipeline\nimport org.apache.spark.ml.feature.{StringIndexer, VectorAssembler}\nimport org.apache.spark.ml.classification.RandomForestClassifier\nimport org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator\n\nval customSchema \u003d StructType(\n    Array(\n        StructField(\"sepal_length\", DoubleType),\n        StructField(\"sepal_width\", DoubleType),\n        StructField(\"petal_length\", DoubleType),\n        StructField(\"petal_width\", DoubleType),\n        StructField(\"species\", StringType)\n    )\n)\n\nval df \u003d spark.read\n    .option(\"header\", \"true\")\n    .schema(customSchema)\n    .csv(\"zeppelin-0.12.0-bin-all/notebook/spark-developer/IRIS.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "2026-01-29 15:21:58.551",
+      "progress": 0,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.types.{DoubleType, StructField, StructType, StringType}\nimport org.apache.spark.ml.Pipeline\nimport org.apache.spark.ml.feature.{StringIndexer, VectorAssembler}\nimport org.apache.spark.ml.classification.RandomForestClassifier\nimport org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator\nval \u001b[1m\u001b[34mcustomSchema\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.types.StructType\u001b[0m \u003d StructType(StructField(sepal_length,DoubleType,true),StructField(sepal_width,DoubleType,true),StructField(petal_length,DoubleType,true),StructField(petal_width,DoubleType,true),StructField(species,StringType,true))\nval \u001b[1m\u001b[34mdf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [sepal_length: double, sepal_width: double ... 3 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1769094874245_2064587260",
+      "id": "paragraph_1769094874245_2064587260",
+      "dateCreated": "2026-01-22 15:14:34.245",
+      "dateStarted": "2026-01-29 15:21:58.564",
+      "dateFinished": "2026-01-29 15:22:00.065",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n\nz.show(df)\n",
+      "user": "anonymous",
+      "dateUpdated": "2026-01-29 15:22:00.110",
+      "progress": 100,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "sepal_length\tsepal_width\tpetal_length\tpetal_width\tspecies\n5.1\t3.5\t1.4\t0.2\tIris-setosa\n4.9\t3.0\t1.4\t0.2\tIris-setosa\n4.7\t3.2\t1.3\t0.2\tIris-setosa\n4.6\t3.1\t1.5\t0.2\tIris-setosa\n5.0\t3.6\t1.4\t0.2\tIris-setosa\n5.4\t3.9\t1.7\t0.4\tIris-setosa\n4.6\t3.4\t1.4\t0.3\tIris-setosa\n5.0\t3.4\t1.5\t0.2\tIris-setosa\n4.4\t2.9\t1.4\t0.2\tIris-setosa\n4.9\t3.1\t1.5\t0.1\tIris-setosa\n5.4\t3.7\t1.5\t0.2\tIris-setosa\n4.8\t3.4\t1.6\t0.2\tIris-setosa\n4.8\t3.0\t1.4\t0.1\tIris-setosa\n4.3\t3.0\t1.1\t0.1\tIris-setosa\n5.8\t4.0\t1.2\t0.2\tIris-setosa\n5.7\t4.4\t1.5\t0.4\tIris-setosa\n5.4\t3.9\t1.3\t0.4\tIris-setosa\n5.1\t3.5\t1.4\t0.3\tIris-setosa\n5.7\t3.8\t1.7\t0.3\tIris-setosa\n5.1\t3.8\t1.5\t0.3\tIris-setosa\n5.4\t3.4\t1.7\t0.2\tIris-setosa\n5.1\t3.7\t1.5\t0.4\tIris-setosa\n4.6\t3.6\t1.0\t0.2\tIris-setosa\n5.1\t3.3\t1.7\t0.5\tIris-setosa\n4.8\t3.4\t1.9\t0.2\tIris-setosa\n5.0\t3.0\t1.6\t0.2\tIris-setosa\n5.0\t3.4\t1.6\t0.4\tIris-setosa\n5.2\t3.5\t1.5\t0.2\tIris-setosa\n5.2\t3.4\t1.4\t0.2\tIris-setosa\n4.7\t3.2\t1.6\t0.2\tIris-setosa\n4.8\t3.1\t1.6\t0.2\tIris-setosa\n5.4\t3.4\t1.5\t0.4\tIris-setosa\n5.2\t4.1\t1.5\t0.1\tIris-setosa\n5.5\t4.2\t1.4\t0.2\tIris-setosa\n4.9\t3.1\t1.5\t0.1\tIris-setosa\n5.0\t3.2\t1.2\t0.2\tIris-setosa\n5.5\t3.5\t1.3\t0.2\tIris-setosa\n4.9\t3.1\t1.5\t0.1\tIris-setosa\n4.4\t3.0\t1.3\t0.2\tIris-setosa\n5.1\t3.4\t1.5\t0.2\tIris-setosa\n5.0\t3.5\t1.3\t0.3\tIris-setosa\n4.5\t2.3\t1.3\t0.3\tIris-setosa\n4.4\t3.2\t1.3\t0.2\tIris-setosa\n5.0\t3.5\t1.6\t0.6\tIris-setosa\n5.1\t3.8\t1.9\t0.4\tIris-setosa\n4.8\t3.0\t1.4\t0.3\tIris-setosa\n5.1\t3.8\t1.6\t0.2\tIris-setosa\n4.6\t3.2\t1.4\t0.2\tIris-setosa\n5.3\t3.7\t1.5\t0.2\tIris-setosa\n5.0\t3.3\t1.4\t0.2\tIris-setosa\n7.0\t3.2\t4.7\t1.4\tIris-versicolor\n6.4\t3.2\t4.5\t1.5\tIris-versicolor\n6.9\t3.1\t4.9\t1.5\tIris-versicolor\n5.5\t2.3\t4.0\t1.3\tIris-versicolor\n6.5\t2.8\t4.6\t1.5\tIris-versicolor\n5.7\t2.8\t4.5\t1.3\tIris-versicolor\n6.3\t3.3\t4.7\t1.6\tIris-versicolor\n4.9\t2.4\t3.3\t1.0\tIris-versicolor\n6.6\t2.9\t4.6\t1.3\tIris-versicolor\n5.2\t2.7\t3.9\t1.4\tIris-versicolor\n5.0\t2.0\t3.5\t1.0\tIris-versicolor\n5.9\t3.0\t4.2\t1.5\tIris-versicolor\n6.0\t2.2\t4.0\t1.0\tIris-versicolor\n6.1\t2.9\t4.7\t1.4\tIris-versicolor\n5.6\t2.9\t3.6\t1.3\tIris-versicolor\n6.7\t3.1\t4.4\t1.4\tIris-versicolor\n5.6\t3.0\t4.5\t1.5\tIris-versicolor\n5.8\t2.7\t4.1\t1.0\tIris-versicolor\n6.2\t2.2\t4.5\t1.5\tIris-versicolor\n5.6\t2.5\t3.9\t1.1\tIris-versicolor\n5.9\t3.2\t4.8\t1.8\tIris-versicolor\n6.1\t2.8\t4.0\t1.3\tIris-versicolor\n6.3\t2.5\t4.9\t1.5\tIris-versicolor\n6.1\t2.8\t4.7\t1.2\tIris-versicolor\n6.4\t2.9\t4.3\t1.3\tIris-versicolor\n6.6\t3.0\t4.4\t1.4\tIris-versicolor\n6.8\t2.8\t4.8\t1.4\tIris-versicolor\n6.7\t3.0\t5.0\t1.7\tIris-versicolor\n6.0\t2.9\t4.5\t1.5\tIris-versicolor\n5.7\t2.6\t3.5\t1.0\tIris-versicolor\n5.5\t2.4\t3.8\t1.1\tIris-versicolor\n5.5\t2.4\t3.7\t1.0\tIris-versicolor\n5.8\t2.7\t3.9\t1.2\tIris-versicolor\n6.0\t2.7\t5.1\t1.6\tIris-versicolor\n5.4\t3.0\t4.5\t1.5\tIris-versicolor\n6.0\t3.4\t4.5\t1.6\tIris-versicolor\n6.7\t3.1\t4.7\t1.5\tIris-versicolor\n6.3\t2.3\t4.4\t1.3\tIris-versicolor\n5.6\t3.0\t4.1\t1.3\tIris-versicolor\n5.5\t2.5\t4.0\t1.3\tIris-versicolor\n5.5\t2.6\t4.4\t1.2\tIris-versicolor\n6.1\t3.0\t4.6\t1.4\tIris-versicolor\n5.8\t2.6\t4.0\t1.2\tIris-versicolor\n5.0\t2.3\t3.3\t1.0\tIris-versicolor\n5.6\t2.7\t4.2\t1.3\tIris-versicolor\n5.7\t3.0\t4.2\t1.2\tIris-versicolor\n5.7\t2.9\t4.2\t1.3\tIris-versicolor\n6.2\t2.9\t4.3\t1.3\tIris-versicolor\n5.1\t2.5\t3.0\t1.1\tIris-versicolor\n5.7\t2.8\t4.1\t1.3\tIris-versicolor\n6.3\t3.3\t6.0\t2.5\tIris-virginica\n5.8\t2.7\t5.1\t1.9\tIris-virginica\n7.1\t3.0\t5.9\t2.1\tIris-virginica\n6.3\t2.9\t5.6\t1.8\tIris-virginica\n6.5\t3.0\t5.8\t2.2\tIris-virginica\n7.6\t3.0\t6.6\t2.1\tIris-virginica\n4.9\t2.5\t4.5\t1.7\tIris-virginica\n7.3\t2.9\t6.3\t1.8\tIris-virginica\n6.7\t2.5\t5.8\t1.8\tIris-virginica\n7.2\t3.6\t6.1\t2.5\tIris-virginica\n6.5\t3.2\t5.1\t2.0\tIris-virginica\n6.4\t2.7\t5.3\t1.9\tIris-virginica\n6.8\t3.0\t5.5\t2.1\tIris-virginica\n5.7\t2.5\t5.0\t2.0\tIris-virginica\n5.8\t2.8\t5.1\t2.4\tIris-virginica\n6.4\t3.2\t5.3\t2.3\tIris-virginica\n6.5\t3.0\t5.5\t1.8\tIris-virginica\n7.7\t3.8\t6.7\t2.2\tIris-virginica\n7.7\t2.6\t6.9\t2.3\tIris-virginica\n6.0\t2.2\t5.0\t1.5\tIris-virginica\n6.9\t3.2\t5.7\t2.3\tIris-virginica\n5.6\t2.8\t4.9\t2.0\tIris-virginica\n7.7\t2.8\t6.7\t2.0\tIris-virginica\n6.3\t2.7\t4.9\t1.8\tIris-virginica\n6.7\t3.3\t5.7\t2.1\tIris-virginica\n7.2\t3.2\t6.0\t1.8\tIris-virginica\n6.2\t2.8\t4.8\t1.8\tIris-virginica\n6.1\t3.0\t4.9\t1.8\tIris-virginica\n6.4\t2.8\t5.6\t2.1\tIris-virginica\n7.2\t3.0\t5.8\t1.6\tIris-virginica\n7.4\t2.8\t6.1\t1.9\tIris-virginica\n7.9\t3.8\t6.4\t2.0\tIris-virginica\n6.4\t2.8\t5.6\t2.2\tIris-virginica\n6.3\t2.8\t5.1\t1.5\tIris-virginica\n6.1\t2.6\t5.6\t1.4\tIris-virginica\n7.7\t3.0\t6.1\t2.3\tIris-virginica\n6.3\t3.4\t5.6\t2.4\tIris-virginica\n6.4\t3.1\t5.5\t1.8\tIris-virginica\n6.0\t3.0\t4.8\t1.8\tIris-virginica\n6.9\t3.1\t5.4\t2.1\tIris-virginica\n6.7\t3.1\t5.6\t2.4\tIris-virginica\n6.9\t3.1\t5.1\t2.3\tIris-virginica\n5.8\t2.7\t5.1\t1.9\tIris-virginica\n6.8\t3.2\t5.9\t2.3\tIris-virginica\n6.7\t3.3\t5.7\t2.5\tIris-virginica\n6.7\t3.0\t5.2\t2.3\tIris-virginica\n6.3\t2.5\t5.0\t1.9\tIris-virginica\n6.5\t3.0\t5.2\t2.0\tIris-virginica\n6.2\t3.4\t5.4\t2.3\tIris-virginica\n5.9\t3.0\t5.1\t1.8\tIris-virginica\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d0"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1769094908013_760172145",
+      "id": "paragraph_1769094908013_760172145",
+      "dateCreated": "2026-01-22 15:15:08.015",
+      "dateStarted": "2026-01-29 15:22:00.117",
+      "dateFinished": "2026-01-29 15:22:02.786",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n\nz.show(df)",
+      "user": "anonymous",
+      "dateUpdated": "2026-01-29 15:22:02.852",
+      "progress": 0,
+      "config": {
+        "colWidth": 6.0,
+        "fontSize": 9.0,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "scatterChart",
+              "height": 518.5,
+              "optionOpen": false,
+              "setting": {
+                "scatterChart": {
+                  "xAxis": {
+                    "name": "petal_length",
+                    "index": 2.0,
+                    "aggr": "sum"
+                  },
+                  "yAxis": {
+                    "name": "petal_width",
+                    "index": 3.0,
+                    "aggr": "sum"
+                  },
+                  "group": {
+                    "name": "species",
+                    "index": 4.0,
+                    "aggr": "sum"
+                  }
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "style": "stack"
+                },
+                "lineChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "forceY": false,
+                  "lineWithFocus": false,
+                  "isDateFormat": false,
+                  "dateFormat": ""
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "stacked": false
+                }
+              },
+              "keys": [
+                {
+                  "name": "sepal_length",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "sepal_width",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            }
+          }
+        },
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "sepal_length\tsepal_width\tpetal_length\tpetal_width\tspecies\n5.1\t3.5\t1.4\t0.2\tIris-setosa\n4.9\t3.0\t1.4\t0.2\tIris-setosa\n4.7\t3.2\t1.3\t0.2\tIris-setosa\n4.6\t3.1\t1.5\t0.2\tIris-setosa\n5.0\t3.6\t1.4\t0.2\tIris-setosa\n5.4\t3.9\t1.7\t0.4\tIris-setosa\n4.6\t3.4\t1.4\t0.3\tIris-setosa\n5.0\t3.4\t1.5\t0.2\tIris-setosa\n4.4\t2.9\t1.4\t0.2\tIris-setosa\n4.9\t3.1\t1.5\t0.1\tIris-setosa\n5.4\t3.7\t1.5\t0.2\tIris-setosa\n4.8\t3.4\t1.6\t0.2\tIris-setosa\n4.8\t3.0\t1.4\t0.1\tIris-setosa\n4.3\t3.0\t1.1\t0.1\tIris-setosa\n5.8\t4.0\t1.2\t0.2\tIris-setosa\n5.7\t4.4\t1.5\t0.4\tIris-setosa\n5.4\t3.9\t1.3\t0.4\tIris-setosa\n5.1\t3.5\t1.4\t0.3\tIris-setosa\n5.7\t3.8\t1.7\t0.3\tIris-setosa\n5.1\t3.8\t1.5\t0.3\tIris-setosa\n5.4\t3.4\t1.7\t0.2\tIris-setosa\n5.1\t3.7\t1.5\t0.4\tIris-setosa\n4.6\t3.6\t1.0\t0.2\tIris-setosa\n5.1\t3.3\t1.7\t0.5\tIris-setosa\n4.8\t3.4\t1.9\t0.2\tIris-setosa\n5.0\t3.0\t1.6\t0.2\tIris-setosa\n5.0\t3.4\t1.6\t0.4\tIris-setosa\n5.2\t3.5\t1.5\t0.2\tIris-setosa\n5.2\t3.4\t1.4\t0.2\tIris-setosa\n4.7\t3.2\t1.6\t0.2\tIris-setosa\n4.8\t3.1\t1.6\t0.2\tIris-setosa\n5.4\t3.4\t1.5\t0.4\tIris-setosa\n5.2\t4.1\t1.5\t0.1\tIris-setosa\n5.5\t4.2\t1.4\t0.2\tIris-setosa\n4.9\t3.1\t1.5\t0.1\tIris-setosa\n5.0\t3.2\t1.2\t0.2\tIris-setosa\n5.5\t3.5\t1.3\t0.2\tIris-setosa\n4.9\t3.1\t1.5\t0.1\tIris-setosa\n4.4\t3.0\t1.3\t0.2\tIris-setosa\n5.1\t3.4\t1.5\t0.2\tIris-setosa\n5.0\t3.5\t1.3\t0.3\tIris-setosa\n4.5\t2.3\t1.3\t0.3\tIris-setosa\n4.4\t3.2\t1.3\t0.2\tIris-setosa\n5.0\t3.5\t1.6\t0.6\tIris-setosa\n5.1\t3.8\t1.9\t0.4\tIris-setosa\n4.8\t3.0\t1.4\t0.3\tIris-setosa\n5.1\t3.8\t1.6\t0.2\tIris-setosa\n4.6\t3.2\t1.4\t0.2\tIris-setosa\n5.3\t3.7\t1.5\t0.2\tIris-setosa\n5.0\t3.3\t1.4\t0.2\tIris-setosa\n7.0\t3.2\t4.7\t1.4\tIris-versicolor\n6.4\t3.2\t4.5\t1.5\tIris-versicolor\n6.9\t3.1\t4.9\t1.5\tIris-versicolor\n5.5\t2.3\t4.0\t1.3\tIris-versicolor\n6.5\t2.8\t4.6\t1.5\tIris-versicolor\n5.7\t2.8\t4.5\t1.3\tIris-versicolor\n6.3\t3.3\t4.7\t1.6\tIris-versicolor\n4.9\t2.4\t3.3\t1.0\tIris-versicolor\n6.6\t2.9\t4.6\t1.3\tIris-versicolor\n5.2\t2.7\t3.9\t1.4\tIris-versicolor\n5.0\t2.0\t3.5\t1.0\tIris-versicolor\n5.9\t3.0\t4.2\t1.5\tIris-versicolor\n6.0\t2.2\t4.0\t1.0\tIris-versicolor\n6.1\t2.9\t4.7\t1.4\tIris-versicolor\n5.6\t2.9\t3.6\t1.3\tIris-versicolor\n6.7\t3.1\t4.4\t1.4\tIris-versicolor\n5.6\t3.0\t4.5\t1.5\tIris-versicolor\n5.8\t2.7\t4.1\t1.0\tIris-versicolor\n6.2\t2.2\t4.5\t1.5\tIris-versicolor\n5.6\t2.5\t3.9\t1.1\tIris-versicolor\n5.9\t3.2\t4.8\t1.8\tIris-versicolor\n6.1\t2.8\t4.0\t1.3\tIris-versicolor\n6.3\t2.5\t4.9\t1.5\tIris-versicolor\n6.1\t2.8\t4.7\t1.2\tIris-versicolor\n6.4\t2.9\t4.3\t1.3\tIris-versicolor\n6.6\t3.0\t4.4\t1.4\tIris-versicolor\n6.8\t2.8\t4.8\t1.4\tIris-versicolor\n6.7\t3.0\t5.0\t1.7\tIris-versicolor\n6.0\t2.9\t4.5\t1.5\tIris-versicolor\n5.7\t2.6\t3.5\t1.0\tIris-versicolor\n5.5\t2.4\t3.8\t1.1\tIris-versicolor\n5.5\t2.4\t3.7\t1.0\tIris-versicolor\n5.8\t2.7\t3.9\t1.2\tIris-versicolor\n6.0\t2.7\t5.1\t1.6\tIris-versicolor\n5.4\t3.0\t4.5\t1.5\tIris-versicolor\n6.0\t3.4\t4.5\t1.6\tIris-versicolor\n6.7\t3.1\t4.7\t1.5\tIris-versicolor\n6.3\t2.3\t4.4\t1.3\tIris-versicolor\n5.6\t3.0\t4.1\t1.3\tIris-versicolor\n5.5\t2.5\t4.0\t1.3\tIris-versicolor\n5.5\t2.6\t4.4\t1.2\tIris-versicolor\n6.1\t3.0\t4.6\t1.4\tIris-versicolor\n5.8\t2.6\t4.0\t1.2\tIris-versicolor\n5.0\t2.3\t3.3\t1.0\tIris-versicolor\n5.6\t2.7\t4.2\t1.3\tIris-versicolor\n5.7\t3.0\t4.2\t1.2\tIris-versicolor\n5.7\t2.9\t4.2\t1.3\tIris-versicolor\n6.2\t2.9\t4.3\t1.3\tIris-versicolor\n5.1\t2.5\t3.0\t1.1\tIris-versicolor\n5.7\t2.8\t4.1\t1.3\tIris-versicolor\n6.3\t3.3\t6.0\t2.5\tIris-virginica\n5.8\t2.7\t5.1\t1.9\tIris-virginica\n7.1\t3.0\t5.9\t2.1\tIris-virginica\n6.3\t2.9\t5.6\t1.8\tIris-virginica\n6.5\t3.0\t5.8\t2.2\tIris-virginica\n7.6\t3.0\t6.6\t2.1\tIris-virginica\n4.9\t2.5\t4.5\t1.7\tIris-virginica\n7.3\t2.9\t6.3\t1.8\tIris-virginica\n6.7\t2.5\t5.8\t1.8\tIris-virginica\n7.2\t3.6\t6.1\t2.5\tIris-virginica\n6.5\t3.2\t5.1\t2.0\tIris-virginica\n6.4\t2.7\t5.3\t1.9\tIris-virginica\n6.8\t3.0\t5.5\t2.1\tIris-virginica\n5.7\t2.5\t5.0\t2.0\tIris-virginica\n5.8\t2.8\t5.1\t2.4\tIris-virginica\n6.4\t3.2\t5.3\t2.3\tIris-virginica\n6.5\t3.0\t5.5\t1.8\tIris-virginica\n7.7\t3.8\t6.7\t2.2\tIris-virginica\n7.7\t2.6\t6.9\t2.3\tIris-virginica\n6.0\t2.2\t5.0\t1.5\tIris-virginica\n6.9\t3.2\t5.7\t2.3\tIris-virginica\n5.6\t2.8\t4.9\t2.0\tIris-virginica\n7.7\t2.8\t6.7\t2.0\tIris-virginica\n6.3\t2.7\t4.9\t1.8\tIris-virginica\n6.7\t3.3\t5.7\t2.1\tIris-virginica\n7.2\t3.2\t6.0\t1.8\tIris-virginica\n6.2\t2.8\t4.8\t1.8\tIris-virginica\n6.1\t3.0\t4.9\t1.8\tIris-virginica\n6.4\t2.8\t5.6\t2.1\tIris-virginica\n7.2\t3.0\t5.8\t1.6\tIris-virginica\n7.4\t2.8\t6.1\t1.9\tIris-virginica\n7.9\t3.8\t6.4\t2.0\tIris-virginica\n6.4\t2.8\t5.6\t2.2\tIris-virginica\n6.3\t2.8\t5.1\t1.5\tIris-virginica\n6.1\t2.6\t5.6\t1.4\tIris-virginica\n7.7\t3.0\t6.1\t2.3\tIris-virginica\n6.3\t3.4\t5.6\t2.4\tIris-virginica\n6.4\t3.1\t5.5\t1.8\tIris-virginica\n6.0\t3.0\t4.8\t1.8\tIris-virginica\n6.9\t3.1\t5.4\t2.1\tIris-virginica\n6.7\t3.1\t5.6\t2.4\tIris-virginica\n6.9\t3.1\t5.1\t2.3\tIris-virginica\n5.8\t2.7\t5.1\t1.9\tIris-virginica\n6.8\t3.2\t5.9\t2.3\tIris-virginica\n6.7\t3.3\t5.7\t2.5\tIris-virginica\n6.7\t3.0\t5.2\t2.3\tIris-virginica\n6.3\t2.5\t5.0\t1.9\tIris-virginica\n6.5\t3.0\t5.2\t2.0\tIris-virginica\n6.2\t3.4\t5.4\t2.3\tIris-virginica\n5.9\t3.0\t5.1\t1.8\tIris-virginica\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d1"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1769095407014_1167986955",
+      "id": "paragraph_1769095407014_1167986955",
+      "dateCreated": "2026-01-22 15:23:27.016",
+      "dateStarted": "2026-01-29 15:22:02.860",
+      "dateFinished": "2026-01-29 15:22:04.173",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n\nz.show(df)",
+      "user": "anonymous",
+      "dateUpdated": "2026-01-29 15:22:04.176",
+      "progress": 0,
+      "config": {
+        "colWidth": 6.0,
+        "fontSize": 9.0,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "scatterChart",
+              "height": 520.5,
+              "optionOpen": false,
+              "setting": {
+                "scatterChart": {
+                  "xAxis": {
+                    "name": "sepal_length",
+                    "index": 0.0,
+                    "aggr": "sum"
+                  },
+                  "yAxis": {
+                    "name": "sepal_width",
+                    "index": 1.0,
+                    "aggr": "sum"
+                  },
+                  "group": {
+                    "name": "species",
+                    "index": 4.0,
+                    "aggr": "sum"
+                  }
+                }
+              },
+              "keys": [
+                {
+                  "name": "sepal_length",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "sepal_width",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            }
+          }
+        },
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "sepal_length\tsepal_width\tpetal_length\tpetal_width\tspecies\n5.1\t3.5\t1.4\t0.2\tIris-setosa\n4.9\t3.0\t1.4\t0.2\tIris-setosa\n4.7\t3.2\t1.3\t0.2\tIris-setosa\n4.6\t3.1\t1.5\t0.2\tIris-setosa\n5.0\t3.6\t1.4\t0.2\tIris-setosa\n5.4\t3.9\t1.7\t0.4\tIris-setosa\n4.6\t3.4\t1.4\t0.3\tIris-setosa\n5.0\t3.4\t1.5\t0.2\tIris-setosa\n4.4\t2.9\t1.4\t0.2\tIris-setosa\n4.9\t3.1\t1.5\t0.1\tIris-setosa\n5.4\t3.7\t1.5\t0.2\tIris-setosa\n4.8\t3.4\t1.6\t0.2\tIris-setosa\n4.8\t3.0\t1.4\t0.1\tIris-setosa\n4.3\t3.0\t1.1\t0.1\tIris-setosa\n5.8\t4.0\t1.2\t0.2\tIris-setosa\n5.7\t4.4\t1.5\t0.4\tIris-setosa\n5.4\t3.9\t1.3\t0.4\tIris-setosa\n5.1\t3.5\t1.4\t0.3\tIris-setosa\n5.7\t3.8\t1.7\t0.3\tIris-setosa\n5.1\t3.8\t1.5\t0.3\tIris-setosa\n5.4\t3.4\t1.7\t0.2\tIris-setosa\n5.1\t3.7\t1.5\t0.4\tIris-setosa\n4.6\t3.6\t1.0\t0.2\tIris-setosa\n5.1\t3.3\t1.7\t0.5\tIris-setosa\n4.8\t3.4\t1.9\t0.2\tIris-setosa\n5.0\t3.0\t1.6\t0.2\tIris-setosa\n5.0\t3.4\t1.6\t0.4\tIris-setosa\n5.2\t3.5\t1.5\t0.2\tIris-setosa\n5.2\t3.4\t1.4\t0.2\tIris-setosa\n4.7\t3.2\t1.6\t0.2\tIris-setosa\n4.8\t3.1\t1.6\t0.2\tIris-setosa\n5.4\t3.4\t1.5\t0.4\tIris-setosa\n5.2\t4.1\t1.5\t0.1\tIris-setosa\n5.5\t4.2\t1.4\t0.2\tIris-setosa\n4.9\t3.1\t1.5\t0.1\tIris-setosa\n5.0\t3.2\t1.2\t0.2\tIris-setosa\n5.5\t3.5\t1.3\t0.2\tIris-setosa\n4.9\t3.1\t1.5\t0.1\tIris-setosa\n4.4\t3.0\t1.3\t0.2\tIris-setosa\n5.1\t3.4\t1.5\t0.2\tIris-setosa\n5.0\t3.5\t1.3\t0.3\tIris-setosa\n4.5\t2.3\t1.3\t0.3\tIris-setosa\n4.4\t3.2\t1.3\t0.2\tIris-setosa\n5.0\t3.5\t1.6\t0.6\tIris-setosa\n5.1\t3.8\t1.9\t0.4\tIris-setosa\n4.8\t3.0\t1.4\t0.3\tIris-setosa\n5.1\t3.8\t1.6\t0.2\tIris-setosa\n4.6\t3.2\t1.4\t0.2\tIris-setosa\n5.3\t3.7\t1.5\t0.2\tIris-setosa\n5.0\t3.3\t1.4\t0.2\tIris-setosa\n7.0\t3.2\t4.7\t1.4\tIris-versicolor\n6.4\t3.2\t4.5\t1.5\tIris-versicolor\n6.9\t3.1\t4.9\t1.5\tIris-versicolor\n5.5\t2.3\t4.0\t1.3\tIris-versicolor\n6.5\t2.8\t4.6\t1.5\tIris-versicolor\n5.7\t2.8\t4.5\t1.3\tIris-versicolor\n6.3\t3.3\t4.7\t1.6\tIris-versicolor\n4.9\t2.4\t3.3\t1.0\tIris-versicolor\n6.6\t2.9\t4.6\t1.3\tIris-versicolor\n5.2\t2.7\t3.9\t1.4\tIris-versicolor\n5.0\t2.0\t3.5\t1.0\tIris-versicolor\n5.9\t3.0\t4.2\t1.5\tIris-versicolor\n6.0\t2.2\t4.0\t1.0\tIris-versicolor\n6.1\t2.9\t4.7\t1.4\tIris-versicolor\n5.6\t2.9\t3.6\t1.3\tIris-versicolor\n6.7\t3.1\t4.4\t1.4\tIris-versicolor\n5.6\t3.0\t4.5\t1.5\tIris-versicolor\n5.8\t2.7\t4.1\t1.0\tIris-versicolor\n6.2\t2.2\t4.5\t1.5\tIris-versicolor\n5.6\t2.5\t3.9\t1.1\tIris-versicolor\n5.9\t3.2\t4.8\t1.8\tIris-versicolor\n6.1\t2.8\t4.0\t1.3\tIris-versicolor\n6.3\t2.5\t4.9\t1.5\tIris-versicolor\n6.1\t2.8\t4.7\t1.2\tIris-versicolor\n6.4\t2.9\t4.3\t1.3\tIris-versicolor\n6.6\t3.0\t4.4\t1.4\tIris-versicolor\n6.8\t2.8\t4.8\t1.4\tIris-versicolor\n6.7\t3.0\t5.0\t1.7\tIris-versicolor\n6.0\t2.9\t4.5\t1.5\tIris-versicolor\n5.7\t2.6\t3.5\t1.0\tIris-versicolor\n5.5\t2.4\t3.8\t1.1\tIris-versicolor\n5.5\t2.4\t3.7\t1.0\tIris-versicolor\n5.8\t2.7\t3.9\t1.2\tIris-versicolor\n6.0\t2.7\t5.1\t1.6\tIris-versicolor\n5.4\t3.0\t4.5\t1.5\tIris-versicolor\n6.0\t3.4\t4.5\t1.6\tIris-versicolor\n6.7\t3.1\t4.7\t1.5\tIris-versicolor\n6.3\t2.3\t4.4\t1.3\tIris-versicolor\n5.6\t3.0\t4.1\t1.3\tIris-versicolor\n5.5\t2.5\t4.0\t1.3\tIris-versicolor\n5.5\t2.6\t4.4\t1.2\tIris-versicolor\n6.1\t3.0\t4.6\t1.4\tIris-versicolor\n5.8\t2.6\t4.0\t1.2\tIris-versicolor\n5.0\t2.3\t3.3\t1.0\tIris-versicolor\n5.6\t2.7\t4.2\t1.3\tIris-versicolor\n5.7\t3.0\t4.2\t1.2\tIris-versicolor\n5.7\t2.9\t4.2\t1.3\tIris-versicolor\n6.2\t2.9\t4.3\t1.3\tIris-versicolor\n5.1\t2.5\t3.0\t1.1\tIris-versicolor\n5.7\t2.8\t4.1\t1.3\tIris-versicolor\n6.3\t3.3\t6.0\t2.5\tIris-virginica\n5.8\t2.7\t5.1\t1.9\tIris-virginica\n7.1\t3.0\t5.9\t2.1\tIris-virginica\n6.3\t2.9\t5.6\t1.8\tIris-virginica\n6.5\t3.0\t5.8\t2.2\tIris-virginica\n7.6\t3.0\t6.6\t2.1\tIris-virginica\n4.9\t2.5\t4.5\t1.7\tIris-virginica\n7.3\t2.9\t6.3\t1.8\tIris-virginica\n6.7\t2.5\t5.8\t1.8\tIris-virginica\n7.2\t3.6\t6.1\t2.5\tIris-virginica\n6.5\t3.2\t5.1\t2.0\tIris-virginica\n6.4\t2.7\t5.3\t1.9\tIris-virginica\n6.8\t3.0\t5.5\t2.1\tIris-virginica\n5.7\t2.5\t5.0\t2.0\tIris-virginica\n5.8\t2.8\t5.1\t2.4\tIris-virginica\n6.4\t3.2\t5.3\t2.3\tIris-virginica\n6.5\t3.0\t5.5\t1.8\tIris-virginica\n7.7\t3.8\t6.7\t2.2\tIris-virginica\n7.7\t2.6\t6.9\t2.3\tIris-virginica\n6.0\t2.2\t5.0\t1.5\tIris-virginica\n6.9\t3.2\t5.7\t2.3\tIris-virginica\n5.6\t2.8\t4.9\t2.0\tIris-virginica\n7.7\t2.8\t6.7\t2.0\tIris-virginica\n6.3\t2.7\t4.9\t1.8\tIris-virginica\n6.7\t3.3\t5.7\t2.1\tIris-virginica\n7.2\t3.2\t6.0\t1.8\tIris-virginica\n6.2\t2.8\t4.8\t1.8\tIris-virginica\n6.1\t3.0\t4.9\t1.8\tIris-virginica\n6.4\t2.8\t5.6\t2.1\tIris-virginica\n7.2\t3.0\t5.8\t1.6\tIris-virginica\n7.4\t2.8\t6.1\t1.9\tIris-virginica\n7.9\t3.8\t6.4\t2.0\tIris-virginica\n6.4\t2.8\t5.6\t2.2\tIris-virginica\n6.3\t2.8\t5.1\t1.5\tIris-virginica\n6.1\t2.6\t5.6\t1.4\tIris-virginica\n7.7\t3.0\t6.1\t2.3\tIris-virginica\n6.3\t3.4\t5.6\t2.4\tIris-virginica\n6.4\t3.1\t5.5\t1.8\tIris-virginica\n6.0\t3.0\t4.8\t1.8\tIris-virginica\n6.9\t3.1\t5.4\t2.1\tIris-virginica\n6.7\t3.1\t5.6\t2.4\tIris-virginica\n6.9\t3.1\t5.1\t2.3\tIris-virginica\n5.8\t2.7\t5.1\t1.9\tIris-virginica\n6.8\t3.2\t5.9\t2.3\tIris-virginica\n6.7\t3.3\t5.7\t2.5\tIris-virginica\n6.7\t3.0\t5.2\t2.3\tIris-virginica\n6.3\t2.5\t5.0\t1.9\tIris-virginica\n6.5\t3.0\t5.2\t2.0\tIris-virginica\n6.2\t3.4\t5.4\t2.3\tIris-virginica\n5.9\t3.0\t5.1\t1.8\tIris-virginica\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d2"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1769260702793_808245105",
+      "id": "paragraph_1769260702793_808245105",
+      "dateCreated": "2026-01-24 13:18:22.799",
+      "dateStarted": "2026-01-29 15:22:04.181",
+      "dateFinished": "2026-01-29 15:22:06.018",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n\nval tt \u003d df.randomSplit(Array(0.8, 0.2))\nval training \u003d tt(0)\nval test \u003d tt(1)\n\nprintln(s\"training\\t${training.count()}\\ntest\\t\\t${test.count()}\")",
+      "user": "anonymous",
+      "dateUpdated": "2026-01-29 15:22:53.524",
+      "progress": 0,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "training\t118\ntest\t\t32\nval \u001b[1m\u001b[34mtt\u001b[0m: \u001b[1m\u001b[32mArray[org.apache.spark.sql.Dataset[org.apache.spark.sql.Row]]\u001b[0m \u003d Array([sepal_length: double, sepal_width: double ... 3 more fields], [sepal_length: double, sepal_width: double ... 3 more fields])\nval \u001b[1m\u001b[34mtraining\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m \u003d [sepal_length: double, sepal_width: double ... 3 more fields]\nval \u001b[1m\u001b[34mtest\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m \u003d [sepal_length: double, sepal_width: double ... 3 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d7"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d8"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d9"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d10"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1769696808581_1524086328",
+      "id": "paragraph_1769696808581_1524086328",
+      "dateCreated": "2026-01-29 14:26:48.597",
+      "dateStarted": "2026-01-29 15:22:53.535",
+      "dateFinished": "2026-01-29 15:22:55.419",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n\nimport org.apache.spark.ml.feature.StringIndexer\n\nval indexer \u003d new StringIndexer()\n    .setInputCols(Array(\"species\"))\n    .setOutputCols(Array(\"target\"))\n\nval indexed \u003d indexer.fit(df).transform(df)\nindexed.show()\n",
+      "user": "anonymous",
+      "dateUpdated": "2026-01-29 15:22:55.485",
+      "progress": 50,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+-----------+------------+-----------+-----------+------+\n|sepal_length|sepal_width|petal_length|petal_width|    species|target|\n+------------+-----------+------------+-----------+-----------+------+\n|         5.1|        3.5|         1.4|        0.2|Iris-setosa|   0.0|\n|         4.9|        3.0|         1.4|        0.2|Iris-setosa|   0.0|\n|         4.7|        3.2|         1.3|        0.2|Iris-setosa|   0.0|\n|         4.6|        3.1|         1.5|        0.2|Iris-setosa|   0.0|\n|         5.0|        3.6|         1.4|        0.2|Iris-setosa|   0.0|\n|         5.4|        3.9|         1.7|        0.4|Iris-setosa|   0.0|\n|         4.6|        3.4|         1.4|        0.3|Iris-setosa|   0.0|\n|         5.0|        3.4|         1.5|        0.2|Iris-setosa|   0.0|\n|         4.4|        2.9|         1.4|        0.2|Iris-setosa|   0.0|\n|         4.9|        3.1|         1.5|        0.1|Iris-setosa|   0.0|\n|         5.4|        3.7|         1.5|        0.2|Iris-setosa|   0.0|\n|         4.8|        3.4|         1.6|        0.2|Iris-setosa|   0.0|\n|         4.8|        3.0|         1.4|        0.1|Iris-setosa|   0.0|\n|         4.3|        3.0|         1.1|        0.1|Iris-setosa|   0.0|\n|         5.8|        4.0|         1.2|        0.2|Iris-setosa|   0.0|\n|         5.7|        4.4|         1.5|        0.4|Iris-setosa|   0.0|\n|         5.4|        3.9|         1.3|        0.4|Iris-setosa|   0.0|\n|         5.1|        3.5|         1.4|        0.3|Iris-setosa|   0.0|\n|         5.7|        3.8|         1.7|        0.3|Iris-setosa|   0.0|\n|         5.1|        3.8|         1.5|        0.3|Iris-setosa|   0.0|\n+------------+-----------+------------+-----------+-----------+------+\nonly showing top 20 rows\n\nimport org.apache.spark.ml.feature.StringIndexer\nval \u001b[1m\u001b[34mindexer\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.feature.StringIndexer\u001b[0m \u003d strIdx_64cebaa0019d\nval \u001b[1m\u001b[34mindexed\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [sepal_length: double, sepal_width: double ... 4 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d11"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d12"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d13"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1769260140106_2016767187",
+      "id": "paragraph_1769260140106_2016767187",
+      "dateCreated": "2026-01-24 13:09:00.110",
+      "dateStarted": "2026-01-29 15:22:55.494",
+      "dateFinished": "2026-01-29 15:22:57.896",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n\nindexed.select(\"target\").distinct.show()",
+      "user": "anonymous",
+      "dateUpdated": "2026-01-29 15:22:57.943",
+      "progress": 0,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[33mwarning: \u001b[0m1 deprecation (since 2.13.3); for details, enable `:setting -deprecation` or `:replay -deprecation`\n+------+\n|target|\n+------+\n|   0.0|\n|   1.0|\n|   2.0|\n+------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d14"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d15"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1769259097653_1308451249",
+      "id": "paragraph_1769259097653_1308451249",
+      "dateCreated": "2026-01-24 12:51:37.661",
+      "dateStarted": "2026-01-29 15:22:57.952",
+      "dateFinished": "2026-01-29 15:22:59.609",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n\nindexed.select(\"sepal_length\", \"sepal_width\", \"petal_length\", \"petal_width\", \"target\").summary().show()\n",
+      "user": "anonymous",
+      "dateUpdated": "2026-01-29 15:22:59.689",
+      "progress": 0,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+------------------+-------------------+------------------+------------------+------------------+\n|summary|      sepal_length|        sepal_width|      petal_length|       petal_width|            target|\n+-------+------------------+-------------------+------------------+------------------+------------------+\n|  count|               150|                150|               150|               150|               150|\n|   mean| 5.843333333333335| 3.0540000000000007|3.7586666666666693|1.1986666666666672|               1.0|\n| stddev|0.8280661279778637|0.43359431136217375| 1.764420419952262|0.7631607417008414|0.8192319205190406|\n|    min|               4.3|                2.0|               1.0|               0.1|               0.0|\n|    25%|               5.1|                2.8|               1.6|               0.3|               0.0|\n|    50%|               5.8|                3.0|               4.3|               1.3|               1.0|\n|    75%|               6.4|                3.3|               5.1|               1.8|               2.0|\n|    max|               7.9|                4.4|               6.9|               2.5|               2.0|\n+-------+------------------+-------------------+------------------+------------------+------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d16"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d17"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1769095336803_1913482668",
+      "id": "paragraph_1769095336803_1913482668",
+      "dateCreated": "2026-01-22 15:22:16.805",
+      "dateStarted": "2026-01-29 15:22:59.713",
+      "dateFinished": "2026-01-29 15:23:02.381",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n\nimport org.apache.spark.ml.feature.{VectorAssembler}\n\nval assambler \u003d new VectorAssembler()\n  .setInputCols(Array(\"sepal_length\", \"sepal_width\", \"petal_length\", \"petal_width\"))\n  .setOutputCol(\"features\")\n\nval assambled \u003d assambler.transform(indexed)\nassambled.show()",
+      "user": "anonymous",
+      "dateUpdated": "2026-01-29 15:23:02.432",
+      "progress": 0,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+-----------+------------+-----------+-----------+------+-----------------+\n|sepal_length|sepal_width|petal_length|petal_width|    species|target|         features|\n+------------+-----------+------------+-----------+-----------+------+-----------------+\n|         5.1|        3.5|         1.4|        0.2|Iris-setosa|   0.0|[5.1,3.5,1.4,0.2]|\n|         4.9|        3.0|         1.4|        0.2|Iris-setosa|   0.0|[4.9,3.0,1.4,0.2]|\n|         4.7|        3.2|         1.3|        0.2|Iris-setosa|   0.0|[4.7,3.2,1.3,0.2]|\n|         4.6|        3.1|         1.5|        0.2|Iris-setosa|   0.0|[4.6,3.1,1.5,0.2]|\n|         5.0|        3.6|         1.4|        0.2|Iris-setosa|   0.0|[5.0,3.6,1.4,0.2]|\n|         5.4|        3.9|         1.7|        0.4|Iris-setosa|   0.0|[5.4,3.9,1.7,0.4]|\n|         4.6|        3.4|         1.4|        0.3|Iris-setosa|   0.0|[4.6,3.4,1.4,0.3]|\n|         5.0|        3.4|         1.5|        0.2|Iris-setosa|   0.0|[5.0,3.4,1.5,0.2]|\n|         4.4|        2.9|         1.4|        0.2|Iris-setosa|   0.0|[4.4,2.9,1.4,0.2]|\n|         4.9|        3.1|         1.5|        0.1|Iris-setosa|   0.0|[4.9,3.1,1.5,0.1]|\n|         5.4|        3.7|         1.5|        0.2|Iris-setosa|   0.0|[5.4,3.7,1.5,0.2]|\n|         4.8|        3.4|         1.6|        0.2|Iris-setosa|   0.0|[4.8,3.4,1.6,0.2]|\n|         4.8|        3.0|         1.4|        0.1|Iris-setosa|   0.0|[4.8,3.0,1.4,0.1]|\n|         4.3|        3.0|         1.1|        0.1|Iris-setosa|   0.0|[4.3,3.0,1.1,0.1]|\n|         5.8|        4.0|         1.2|        0.2|Iris-setosa|   0.0|[5.8,4.0,1.2,0.2]|\n|         5.7|        4.4|         1.5|        0.4|Iris-setosa|   0.0|[5.7,4.4,1.5,0.4]|\n|         5.4|        3.9|         1.3|        0.4|Iris-setosa|   0.0|[5.4,3.9,1.3,0.4]|\n|         5.1|        3.5|         1.4|        0.3|Iris-setosa|   0.0|[5.1,3.5,1.4,0.3]|\n|         5.7|        3.8|         1.7|        0.3|Iris-setosa|   0.0|[5.7,3.8,1.7,0.3]|\n|         5.1|        3.8|         1.5|        0.3|Iris-setosa|   0.0|[5.1,3.8,1.5,0.3]|\n+------------+-----------+------------+-----------+-----------+------+-----------------+\nonly showing top 20 rows\n\nimport org.apache.spark.ml.feature.VectorAssembler\nval \u001b[1m\u001b[34massambler\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.feature.VectorAssembler\u001b[0m \u003d VectorAssembler: uid\u003dvecAssembler_a8273dcc4ba5, handleInvalid\u003derror, numInputCols\u003d4\nval \u001b[1m\u001b[34massambled\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [sepal_length: double, sepal_width: double ... 5 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d18"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1769103882217_563766256",
+      "id": "paragraph_1769103882217_563766256",
+      "dateCreated": "2026-01-22 17:44:42.223",
+      "dateStarted": "2026-01-29 15:23:02.440",
+      "dateFinished": "2026-01-29 15:23:03.732",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n\nimport org.apache.spark.ml.tuning.{CrossValidator, ParamGridBuilder}\nimport org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator\n\nval rf \u003d new RandomForestClassifier()\n  .setLabelCol(\"target\")\n  .setFeaturesCol(\"features\")\n  .setSeed(42)\n\nval evaluator \u003d new MulticlassClassificationEvaluator()\n    .setLabelCol(\"target\")\n    .setPredictionCol(\"prediction\")\n    .setMetricName(\"f1\")\n\nval paramGrid \u003d new ParamGridBuilder().build()\nval cv \u003d new CrossValidator()\n    .setEstimator(rf)\n    .setEvaluator(evaluator)\n    .setEstimatorParamMaps(paramGrid)\n\nval cvModel \u003d cv.fit(assambled)\nval res \u003d cvModel.transform(assambled)\n\nprintln(s\"Score: ${cvModel.avgMetrics(0)}\")\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2026-01-29 15:23:30.241",
+      "progress": 100,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Score: 0.9196187100768288\nimport org.apache.spark.ml.tuning.{CrossValidator, ParamGridBuilder}\nimport org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator\nval \u001b[1m\u001b[34mrf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.classification.RandomForestClassifier\u001b[0m \u003d rfc_4d268383421c\nval \u001b[1m\u001b[34mevaluator\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.evaluation.MulticlassClassificationEvaluator\u001b[0m \u003d MulticlassClassificationEvaluator: uid\u003dmcEval_3f444bf58e6c, metricName\u003df1, metricLabel\u003d0.0, beta\u003d1.0, eps\u003d1.0E-15\nval \u001b[1m\u001b[34mparamGrid\u001b[0m: \u001b[1m\u001b[32mArray[org.apache.spark.ml.param.ParamMap]\u001b[0m \u003d\nArray({\n\n})\nval \u001b[1m\u001b[34mcv\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.tuning.CrossValidator\u001b[0m \u003d cv_3c3b6b9e45e1\nval \u001b[1m\u001b[34mcvModel\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.tuning.CrossValidatorModel\u001b[0m \u003d CrossValidatorModel: uid\u003dcv_3c3b6b9e45e1, be...\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d19"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d20"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d21"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d22"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d23"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d24"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d25"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d26"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d27"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d28"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d29"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d30"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d31"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d32"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d33"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d34"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d35"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d36"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d37"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d38"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d39"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d40"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d41"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d42"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d43"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d44"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d45"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d46"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d47"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d48"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d49"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d50"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d51"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d52"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d53"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d54"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d55"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d56"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d57"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d58"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d59"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1769690806444_359664126",
+      "id": "paragraph_1769690806444_359664126",
+      "dateCreated": "2026-01-29 12:46:46.450",
+      "dateStarted": "2026-01-29 15:23:30.258",
+      "dateFinished": "2026-01-29 15:23:44.092",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n\nimport org.apache.spark.ml.Pipeline\n\nval indexer \u003d new StringIndexer()\n    .setInputCols(Array(\"species\"))\n    .setOutputCols(Array(\"target\"))\n\nval assembler \u003d new VectorAssembler()\n  .setInputCols(Array(\"sepal_length\", \"sepal_width\", \"petal_length\", \"petal_width\"))\n  .setOutputCol(\"features\")\n\nval rf \u003d new RandomForestClassifier()\n  .setLabelCol(\"target\")\n  .setFeaturesCol(\"features\")\n  .setSeed(42)\n\nval pipeline \u003d new Pipeline().setStages(Array(indexer, assembler, rf))\nval pipelineModel \u003d pipeline.fit(training)\n",
+      "user": "anonymous",
+      "dateUpdated": "2026-01-29 15:23:44.155",
+      "progress": 100,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.ml.Pipeline\nval \u001b[1m\u001b[34mindexer\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.feature.StringIndexer\u001b[0m \u003d strIdx_ba05d477a7bb\nval \u001b[1m\u001b[34massembler\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.feature.VectorAssembler\u001b[0m \u003d VectorAssembler: uid\u003dvecAssembler_7472d29f7c7e, handleInvalid\u003derror, numInputCols\u003d4\nval \u001b[1m\u001b[34mrf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.classification.RandomForestClassifier\u001b[0m \u003d rfc_a839b8710166\nval \u001b[1m\u001b[34mpipeline\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.Pipeline\u001b[0m \u003d pipeline_718662f670ca\nval \u001b[1m\u001b[34mpipelineModel\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.PipelineModel\u001b[0m \u003d pipeline_718662f670ca\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d60"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d61"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d62"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d63"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d64"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d65"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d66"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d67"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d68"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d69"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1769697033831_2033408991",
+      "id": "paragraph_1769697033831_2033408991",
+      "dateCreated": "2026-01-29 14:30:33.836",
+      "dateStarted": "2026-01-29 15:23:44.165",
+      "dateFinished": "2026-01-29 15:23:47.738",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n\nval evaluator \u003d new MulticlassClassificationEvaluator()\n    .setLabelCol(\"target\")\n    .setPredictionCol(\"prediction\")\n    .setMetricName(\"accuracy\")\n\nval testResult \u003d pipelineModel.transform(test)\n\nval score \u003d evaluator.evaluate(testResult)\n\nprintln(s\"Score: $score\")",
+      "user": "anonymous",
+      "dateUpdated": "2026-01-29 15:23:47.816",
+      "progress": 0,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Score: 0.90625\nval \u001b[1m\u001b[34mevaluator\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.evaluation.MulticlassClassificationEvaluator\u001b[0m \u003d MulticlassClassificationEvaluator: uid\u003dmcEval_e7f9caf1f939, metricName\u003daccuracy, metricLabel\u003d0.0, beta\u003d1.0, eps\u003d1.0E-15\nval \u001b[1m\u001b[34mtestResult\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [sepal_length: double, sepal_width: double ... 8 more fields]\nval \u001b[1m\u001b[34mscore\u001b[0m: \u001b[1m\u001b[32mDouble\u001b[0m \u003d 0.90625\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d70"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1769700011209_1739120641",
+      "id": "paragraph_1769700011209_1739120641",
+      "dateCreated": "2026-01-29 15:20:11.214",
+      "dateStarted": "2026-01-29 15:23:47.821",
+      "dateFinished": "2026-01-29 15:23:48.783",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n\nval testResult \u003d pipelineModel.transform(test)\n\ntestResult.show()",
+      "user": "anonymous",
+      "dateUpdated": "2026-01-29 15:23:48.832",
+      "progress": 0,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+-----------+------------+-----------+---------------+------+-----------------+--------------------+--------------------+----------+\n|sepal_length|sepal_width|petal_length|petal_width|        species|target|         features|       rawPrediction|         probability|prediction|\n+------------+-----------+------------+-----------+---------------+------+-----------------+--------------------+--------------------+----------+\n|         4.4|        3.2|         1.3|        0.2|    Iris-setosa|   0.0|[4.4,3.2,1.3,0.2]|      [20.0,0.0,0.0]|       [1.0,0.0,0.0]|       0.0|\n|         4.5|        2.3|         1.3|        0.3|    Iris-setosa|   0.0|[4.5,2.3,1.3,0.3]|      [20.0,0.0,0.0]|       [1.0,0.0,0.0]|       0.0|\n|         4.6|        3.1|         1.5|        0.2|    Iris-setosa|   0.0|[4.6,3.1,1.5,0.2]|      [20.0,0.0,0.0]|       [1.0,0.0,0.0]|       0.0|\n|         4.8|        3.0|         1.4|        0.3|    Iris-setosa|   0.0|[4.8,3.0,1.4,0.3]|      [20.0,0.0,0.0]|       [1.0,0.0,0.0]|       0.0|\n|         4.9|        2.5|         4.5|        1.7| Iris-virginica|   2.0|[4.9,2.5,4.5,1.7]|[0.0,18.922077922...|[0.0,0.9461038961...|       1.0|\n|         4.9|        3.1|         1.5|        0.1|    Iris-setosa|   0.0|[4.9,3.1,1.5,0.1]|      [20.0,0.0,0.0]|       [1.0,0.0,0.0]|       0.0|\n|         5.0|        2.3|         3.3|        1.0|Iris-versicolor|   1.0|[5.0,2.3,3.3,1.0]|[0.0,19.922077922...|[0.0,0.9961038961...|       1.0|\n|         5.0|        3.3|         1.4|        0.2|    Iris-setosa|   0.0|[5.0,3.3,1.4,0.2]|      [20.0,0.0,0.0]|       [1.0,0.0,0.0]|       0.0|\n|         5.0|        3.6|         1.4|        0.2|    Iris-setosa|   0.0|[5.0,3.6,1.4,0.2]|      [20.0,0.0,0.0]|       [1.0,0.0,0.0]|       0.0|\n|         5.1|        3.5|         1.4|        0.2|    Iris-setosa|   0.0|[5.1,3.5,1.4,0.2]|      [20.0,0.0,0.0]|       [1.0,0.0,0.0]|       0.0|\n|         5.1|        3.8|         1.6|        0.2|    Iris-setosa|   0.0|[5.1,3.8,1.6,0.2]|      [20.0,0.0,0.0]|       [1.0,0.0,0.0]|       0.0|\n|         5.5|        2.3|         4.0|        1.3|Iris-versicolor|   1.0|[5.5,2.3,4.0,1.3]|[0.0,19.922077922...|[0.0,0.9961038961...|       1.0|\n|         5.5|        4.2|         1.4|        0.2|    Iris-setosa|   0.0|[5.5,4.2,1.4,0.2]|      [20.0,0.0,0.0]|       [1.0,0.0,0.0]|       0.0|\n|         5.6|        2.5|         3.9|        1.1|Iris-versicolor|   1.0|[5.6,2.5,3.9,1.1]|[0.0,19.922077922...|[0.0,0.9961038961...|       1.0|\n|         5.8|        2.7|         4.1|        1.0|Iris-versicolor|   1.0|[5.8,2.7,4.1,1.0]|[0.0,19.922077922...|[0.0,0.9961038961...|       1.0|\n|         5.9|        3.0|         5.1|        1.8| Iris-virginica|   2.0|[5.9,3.0,5.1,1.8]|      [0.0,2.0,18.0]|       [0.0,0.1,0.9]|       2.0|\n|         6.0|        2.7|         5.1|        1.6|Iris-versicolor|   1.0|[6.0,2.7,5.1,1.6]|[0.0,5.0470779220...|[0.0,0.2523538961...|       2.0|\n|         6.2|        2.9|         4.3|        1.3|Iris-versicolor|   1.0|[6.2,2.9,4.3,1.3]|[0.0,19.922077922...|[0.0,0.9961038961...|       1.0|\n|         6.3|        2.5|         4.9|        1.5|Iris-versicolor|   1.0|[6.3,2.5,4.9,1.5]|[0.0,10.047077922...|[0.0,0.5023538961...|       1.0|\n|         6.3|        2.8|         5.1|        1.5| Iris-virginica|   2.0|[6.3,2.8,5.1,1.5]|[0.0,6.0470779220...|[0.0,0.3023538961...|       2.0|\n+------------+-----------+------------+-----------+---------------+------+-----------------+--------------------+--------------------+----------+\nonly showing top 20 rows\n\nval \u001b[1m\u001b[34mtestResult\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [sepal_length: double, sepal_width: double ... 8 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d71"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1769700156880_1727474098",
+      "id": "paragraph_1769700156880_1727474098",
+      "dateCreated": "2026-01-29 15:22:36.885",
+      "dateStarted": "2026-01-29 15:23:48.838",
+      "dateFinished": "2026-01-29 15:23:49.484",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\n\nimport org.apache.spark.ml.Pipeline\nimport org.apache.spark.ml.tuning.{CrossValidator, ParamGridBuilder}\n\nval paramGrid \u003d new ParamGridBuilder().build()\nval cv \u003d new CrossValidator()\n    .setEstimator(rf)\n    .setEvaluator(evaluator)\n    .setEstimatorParamMaps(paramGrid)\n\nval pipeline \u003d new Pipeline().setStages(Array(indexer, assembler, cv))\n\n\nval pipelineModel \u003d pipeline.fit(df)\nval res \u003d pipelineModel.transform(df)\n\nres.show()",
+      "user": "anonymous",
+      "dateUpdated": "2026-01-29 15:23:49.558",
+      "progress": 100,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+-----------+------------+-----------+-----------+------+-----------------+--------------+-------------+----------+\n|sepal_length|sepal_width|petal_length|petal_width|    species|target|         features| rawPrediction|  probability|prediction|\n+------------+-----------+------------+-----------+-----------+------+-----------------+--------------+-------------+----------+\n|         5.1|        3.5|         1.4|        0.2|Iris-setosa|   0.0|[5.1,3.5,1.4,0.2]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         4.9|        3.0|         1.4|        0.2|Iris-setosa|   0.0|[4.9,3.0,1.4,0.2]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         4.7|        3.2|         1.3|        0.2|Iris-setosa|   0.0|[4.7,3.2,1.3,0.2]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         4.6|        3.1|         1.5|        0.2|Iris-setosa|   0.0|[4.6,3.1,1.5,0.2]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         5.0|        3.6|         1.4|        0.2|Iris-setosa|   0.0|[5.0,3.6,1.4,0.2]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         5.4|        3.9|         1.7|        0.4|Iris-setosa|   0.0|[5.4,3.9,1.7,0.4]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         4.6|        3.4|         1.4|        0.3|Iris-setosa|   0.0|[4.6,3.4,1.4,0.3]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         5.0|        3.4|         1.5|        0.2|Iris-setosa|   0.0|[5.0,3.4,1.5,0.2]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         4.4|        2.9|         1.4|        0.2|Iris-setosa|   0.0|[4.4,2.9,1.4,0.2]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         4.9|        3.1|         1.5|        0.1|Iris-setosa|   0.0|[4.9,3.1,1.5,0.1]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         5.4|        3.7|         1.5|        0.2|Iris-setosa|   0.0|[5.4,3.7,1.5,0.2]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         4.8|        3.4|         1.6|        0.2|Iris-setosa|   0.0|[4.8,3.4,1.6,0.2]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         4.8|        3.0|         1.4|        0.1|Iris-setosa|   0.0|[4.8,3.0,1.4,0.1]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         4.3|        3.0|         1.1|        0.1|Iris-setosa|   0.0|[4.3,3.0,1.1,0.1]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         5.8|        4.0|         1.2|        0.2|Iris-setosa|   0.0|[5.8,4.0,1.2,0.2]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         5.7|        4.4|         1.5|        0.4|Iris-setosa|   0.0|[5.7,4.4,1.5,0.4]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         5.4|        3.9|         1.3|        0.4|Iris-setosa|   0.0|[5.4,3.9,1.3,0.4]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         5.1|        3.5|         1.4|        0.3|Iris-setosa|   0.0|[5.1,3.5,1.4,0.3]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         5.7|        3.8|         1.7|        0.3|Iris-setosa|   0.0|[5.7,3.8,1.7,0.3]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n|         5.1|        3.8|         1.5|        0.3|Iris-setosa|   0.0|[5.1,3.8,1.5,0.3]|[20.0,0.0,0.0]|[1.0,0.0,0.0]|       0.0|\n+------------+-----------+------------+-----------+-----------+------+-----------------+--------------+-------------+----------+\nonly showing top 20 rows\n\nimport org.apache.spark.ml.Pipeline\nimport org.apache.spark.ml.tuning.{CrossValidator, ParamGridBuilder}\nval \u001b[1m\u001b[34mparamGrid\u001b[0m: \u001b[1m\u001b[32mArray[org.apache.spark.ml.param.ParamMap]\u001b[0m \u003d\nArray({\n\n})\nval \u001b[1m\u001b[34mcv\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.tuning.CrossValidator\u001b[0m \u003d cv_524b571b7965\nval \u001b[1m\u001b[34mpipeline\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.Pipeline\u001b[0m \u003d pipeline_4623cf3f2ea2\nval \u001b[1m\u001b[34mpipelineModel\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.PipelineModel\u001b[0m \u003d pipeline_4623cf3f2ea2\nval \u001b[1m\u001b[34mres\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [sepal_length: double, sepal_width: double ... 8 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d72"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d73"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d74"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d75"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d76"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d77"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d78"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d79"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d80"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d81"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d82"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d83"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d84"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d85"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d86"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d87"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d88"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d89"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d90"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d91"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d92"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d93"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d94"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d95"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d96"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d97"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d98"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d99"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d100"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d101"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d102"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d103"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d104"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d105"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d106"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d107"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d108"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d109"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d110"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d111"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d112"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d113"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d114"
+            },
+            {
+              "jobUrl": "http://192.168.139.32:4040/jobs/job?id\u003d115"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1769692309118_1817946963",
+      "id": "paragraph_1769692309118_1817946963",
+      "dateCreated": "2026-01-29 13:11:49.128",
+      "dateStarted": "2026-01-29 15:23:49.566",
+      "dateFinished": "2026-01-29 15:23:55.885",
+      "status": "FINISHED"
+    }
+  ],
+  "name": "iris",
+  "id": "2MFNH9MRH",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.12.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {
+    "isRunning": true
+  }
+}
